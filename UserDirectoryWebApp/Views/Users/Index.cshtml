@@ -1,0 +1,148 @@
+﻿@model IEnumerable<UserDirectoryWebApp.Data.Entities.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of Users</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<div>
+    <input class="form-control" onkeyup="Filter(event.target.value)" placeholder="Filter" />
+</div>
+<br />
+<div class="dropdown show">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort By
+    </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuName">
+        <a class="dropdown-item" href="/Users/Index?sortBy=name_asc">Sort By Name: Ascending</a>
+        <a class="dropdown-item" href="/Users/Index?sortBy=name_desc">Sort By Name: Descending</a>
+        <a class="dropdown-item" href="/Users/Index?sortBy=surname_asc">Sort By Surname: Ascending</a>
+        <a class="dropdown-item" href="/Users/Index?sortBy=surname_desc">Sort By Surname: Descending</a>
+    </div>
+</div>
+<br />
+<table class="table" id="userTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageFile)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </p>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </p>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserImageName)
+            </td>
+            <td>
+                @if (item.UserImageName != null)
+                {
+                    <img src="@("~/image/"+item.UserImageName)" asp-append-version="true" height="50" />
+                }
+                else
+                {<p>No Image Uploaded</p>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        Filter = (filterText) => {
+            console.log('filterText', filterText);
+            var filter, table, tr;
+            filter = filterText.toUpperCase();
+            table = document.getElementById("userTable");
+            tr = table.getElementsByTagName("tr");
+            console.log('table,tr', table, tr);
+            for (var i = 0; i < tr.length; i++) {
+                var tdName = tr[i].getElementsByTagName("td")[0];
+                var tdSurname = tr[i].getElementsByTagName("td")[1];
+                var tdEmail = tr[i].getElementsByTagName("td")[2];
+                var tdBirthDate = tr[i].getElementsByTagName("td")[3];
+                var tdPhone = tr[i].getElementsByTagName("td")[4];
+
+                if (tdName || tdSurname || tdEmail || tdBirthDate || tdPhone) {
+                    NameElement = tdName.getElementsByTagName("p")[0];
+                    SurnameElement = tdSurname.getElementsByTagName("p")[0];
+                    EmailElement = tdEmail.getElementsByTagName("p")[0];
+                    BirthDateElement = tdBirthDate.getElementsByTagName("p")[0];
+                    PhoneElement = tdPhone.getElementsByTagName("p")[0];
+
+                    if (tdName || tdSurname || tdEmail || tdBirthDate || tdPhone) {
+                        var NameValue = NameElement.textContent || NameElement.innerHTML;
+                        var SurnameValue = SurnameElement.textContent || SurnameElement.innerHTML;
+                        var EmailValue = EmailElement.textContent || EmailElement.innerHTML;
+                        var BirthdateValue = BirthDateElement.textContent || BirthdateElement.innerHTML;
+                        var PhoneValue = PhoneElement.textContent || PhoneElement.innerHTML;
+                        console.log('NameValue', 'SurnameValue', 'EmailValue', 'BirthdateValue', 'PhoneValue', NameValue, SurnameValue, EmailValue, BirthdateValue, PhoneValue);
+
+                        if (NameValue.toUpperCase().indexOf(filter) > -1 || SurnameValue.toUpperCase().indexOf(filter) > -1 || EmailValue.toUpperCase().indexOf(filter) > -1 || BirthdateValue.toUpperCase().indexOf(filter) > -1 || PhoneValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+
+                }
+            }
+        }
+    </script>
+}
