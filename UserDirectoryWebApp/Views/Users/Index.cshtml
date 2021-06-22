@@ -7,24 +7,29 @@
 
 <h1>List of Users</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
-<div>
-    <input class="form-control" onkeyup="Filter(event.target.value)" placeholder="Filter" />
-</div>
-<br />
-<div class="dropdown show">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sort By
-    </a>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuName">
-        <a class="dropdown-item" href="/Users/Index?sortBy=name_asc">Sort By Name: Ascending</a>
-        <a class="dropdown-item" href="/Users/Index?sortBy=name_desc">Sort By Name: Descending</a>
-        <a class="dropdown-item" href="/Users/Index?sortBy=surname_asc">Sort By Surname: Ascending</a>
-        <a class="dropdown-item" href="/Users/Index?sortBy=surname_desc">Sort By Surname: Descending</a>
+<div class="row">
+    <div class="col-md-2">
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </div>
+    <div class="col-md-8">
+        <input class="form-control" onkeyup="Filter(event.target.value)" placeholder="Filter" />
+    </div>
+    <div class="col-md-2">
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuName">
+                <a class="dropdown-item" href="/Users/Index?sortBy=name_asc">Sort By Name: Ascending</a>
+                <a class="dropdown-item" href="/Users/Index?sortBy=name_desc">Sort By Name: Descending</a>
+                <a class="dropdown-item" href="/Users/Index?sortBy=surname_asc">Sort By Surname: Ascending</a>
+                <a class="dropdown-item" href="/Users/Index?sortBy=surname_desc">Sort By Surname: Descending</a>
+            </div>
+        </div>
     </div>
 </div>
+
+
 <br />
 <table class="table" id="userTable">
     <thead>
